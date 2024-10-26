@@ -6,6 +6,7 @@ import com.example.animal_clinic.entity.ClientEntity;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class ClientController {
         }
     }
 
+    @Transactional(timeout = 10,rollbackFor = Exception.class)
     @PostMapping
     public ResponseEntity<ClientEntity> addNew(@RequestBody @Valid ClientEntity client) {
         clientServise.addNew(client);
@@ -43,6 +45,7 @@ public class ClientController {
 
     }
 
+    @Transactional(timeout = 10,rollbackFor = Exception.class)
     @PutMapping("/{id}")
     public ResponseEntity<ClientEntity> update(@PathVariable Long id, @RequestBody @Valid ClientEntity update) {
         try {
@@ -53,6 +56,7 @@ public class ClientController {
         }
     }
 
+    @Transactional(timeout = 10,rollbackFor = Exception.class)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
